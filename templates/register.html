@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url('/static/images/cloudimg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        form {
+            background-color: rgba(13, 13, 13, 0.6); /* Transparent background */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .login-button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #45a049;
+        }
+
+        .register-button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .register-button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        <h1 style="font-family:'Times New Roman', Times, serif ; color: #cccccc;">Register</h1>
+
+        <input type="text" id="username" name="username" placeholder="Enter User Name" required>
+
+        <input type="password" id="password" name="pass" placeholder="Enter Password" required>
+        
+        <input type="password" id="confirm-password" name="confirm_password" placeholder="Enter Confirm Password" required>
+        <span id="password-match-error" class="error-message"></span>
+
+        <button type="submit" class="register-button">Register</button>
+        <a href="{{ url_for('login') }}" class="login-button">Login</a>
+    </form>
+
+    <script>
+        document.querySelector('#confirm-password').addEventListener('input', function() {
+            var password = document.querySelector('#password').value;
+            var confirmPassword = document.querySelector('#confirm-password').value;
+            var errorMessage = document.querySelector('#password-match-error');
+
+            if (password === confirmPassword) {
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = 'Passwords do not match';
+            }
+        });
+    </script>
+</body>
+</html>

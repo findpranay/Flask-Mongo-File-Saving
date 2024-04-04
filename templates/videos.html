@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded Videos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* CSS for navigation bar */
+        body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* CSS for navigation bar */
+    .navbar {
+        overflow: hidden;
+        background-color: #333;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+    }
+
+    .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .navbar a.active {
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    /* CSS for videos */
+    .video-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start; /* Align videos to start */
+        margin-top: 60px;
+        padding-left: 20px; /* Add padding to start */
+    }
+
+    .video-item {
+        margin: 10px;
+        text-align: center;
+        flex: 0 0 calc(33.33% - 20px);
+        max-width: calc(33.33% - 20px);
+        box-sizing: border-box;
+    }
+
+    .video-item video {
+        max-width: 100%;
+        max-height: 240px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .video-item video:hover {
+        transform: scale(1.05);
+    }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a class="active" href="/home">Home</a>
+        <a href="/names">Names</a>
+        <a href="/images">Images</a>
+        <a href="/videos">Videos</a>
+        <a style="float: right;" href="/logout">Logout</a>
+    </div>
+
+    <div class="video-container">
+        {% for video in videos %}
+            <div class="video-item">
+                <video width="320" height="240" controls>
+                    <source src="{{ url_for('stream_video', video_id=video.video_id) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
