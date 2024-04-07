@@ -200,6 +200,19 @@ def submit():
     # Handle invalid selection (optional)
     return redirect(url_for('index'))  # Or display an error message
 
+
+# @app.route('/names')
+# def show_names():
+#     user_id = session.get('user_id')
+
+#     if user_id is None:
+#         return redirect(url_for('login'))  # Redirect if user is not logged in
+
+#     names_collection = mongo.db.names
+#     names = [name['name'] for name in names_collection.find({'user_id': user_id})]  # Only fetch names associated with the user
+#     return render_template('names.html', names=names)
+
+
 @app.route('/names')
 def show_names():
     user_id = session.get('user_id')
@@ -208,8 +221,9 @@ def show_names():
         return redirect(url_for('login'))  # Redirect if user is not logged in
 
     names_collection = mongo.db.names
-    names = [name['name'] for name in names_collection.find({'user_id': user_id})]  # Only fetch names associated with the user
+    names = [{'_id': str(name['_id']), 'name': name['name']} for name in names_collection.find({'user_id': user_id})]
     return render_template('names.html', names=names)
+
 
 @app.route('/images')
 def show_images():
@@ -275,16 +289,28 @@ def stream_video(video_id):
         return "Video not found", 404
 
 
+# @app.route('/delete_name/<name_id>', methods=['POST'])
+# def delete_name(name_id):
+#     user_id = session.get('user_id')
+
+#     if user_id is None:
+#         return redirect(url_for('login'))  # Redirect if user is not logged in
+
+#     names_collection = mongo.db.names
+#     names_collection.delete_one({'_id': ObjectId(name_id), 'user_id': user_id})  # Delete the name associated with the user
+#     return redirect(url_for('show_names'))
+
 @app.route('/delete_name/<name_id>', methods=['POST'])
 def delete_name(name_id):
     user_id = session.get('user_id')
-
     if user_id is None:
         return redirect(url_for('login'))  # Redirect if user is not logged in
-
+    
+    # Delete the name associated with the logged-in user
     names_collection = mongo.db.names
-    names_collection.delete_one({'_id': ObjectId(name_id), 'user_id': user_id})  # Delete the name associated with the user
+    names_collection.delete_one({'_id': ObjectId(name_id), 'user_id': user_id})
     return redirect(url_for('show_names'))
+
 
 
 # Assuming other necessary imports are already in place
